@@ -1,0 +1,4 @@
+”правление бесколлекторным двигателем посто¤нного тока (BLDC) с помощью STM32
+http://www.avislab.com/blog/stm32-bldc_ru/
+STM32F103C8 Examples
+https://github.com/avislab/STM32F103
