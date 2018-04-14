@@ -97,6 +97,25 @@ void EXTI9_5_IRQHandler(void) {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// TIM1_CH1 - PA8
+//TIM1_CH1N - PA7
+//TIM1_CH2 - PA9
+//TIM1_CH2N -  PB14
+//TIM1_CH3 - PA10
+//TIM1_CH3N  - PB15
+
 void BLDC_PWMTimerInit(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;

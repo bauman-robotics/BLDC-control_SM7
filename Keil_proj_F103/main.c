@@ -122,13 +122,12 @@ int main(void)
 //	GPIO_SetBits(GPIOB, GPIO_Pin_0);
 
 
-/*
 
 	TIM1->CCR1 = 4500;
 	TIM1->CCR2 = 2000;
 	TIM1->CCR3 = 3000;
 	
-	*/
+	
 	
 	
 	
@@ -146,7 +145,7 @@ int main(void)
 	
 	myDelay_ms(3000);	*/
 	
-	angle_init = 92.8;//angle_average;//angle_IRQ; //190.366;//angle_IRQ;
+	//angle_init = 92.8;//angle_average;//angle_IRQ; //190.366;//angle_IRQ;
 
 
 
@@ -329,7 +328,7 @@ myDelay_ms(1000);
 			angle = angle_IRQ;
 			des_val = (ADC_average)*360/4095;
 			angle_error = des_val - angle;
-			FOC(angle, angle_error, 0.5, 0.5);
+			//FOC(angle, angle_error, 0.5, 0.5);
 			
 			
 			
