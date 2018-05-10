@@ -35,17 +35,9 @@ uint8_t filled_ADC;
   uint32_t sum_ADC;
 
 
-#define BLOCK_SIZE            1
-#define NUM_TAPS              501
 
 
-static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS - 1];
-/*
-const float32_t firCoeffs32[NUM_TAPS] = { 
-	
-};*/
-uint32_t blockSize = BLOCK_SIZE;
- float32_t outputF32;
+
 
 
 uint32_t t_uart;
@@ -53,13 +45,11 @@ char send_uart;
 
 char str[7];
 
+
 int main(void)
 	
 {
-	 //arm_fir_instance_f32 S;
-	
-	
-//	arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], blockSize);
+	 
 	
 	
 	
@@ -88,7 +78,7 @@ int main(void)
 	//	des_val = -71; ///////////////
 
 
-//t_uart = TIM5->CNT;
+
 
 
 	
@@ -105,49 +95,7 @@ int main(void)
 
 		
 		
-		/*
 		
-		
-		if(TIM5->CNT - t_uart > 10000)
-		{
-			while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){}
-				//send_uart = (char)(angle_raw_16>>8);
-				//send_uart = 'f';
-				sprintf(str,"%4d" , angle_raw_16 );
-	        USART_SendData (USART2, str[0]);
-				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
-					USART_SendData (USART2, str[1]);
-				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
-					USART_SendData (USART2, str[2]);
-				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
-					USART_SendData (USART2, str[3]);
-				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
-				
-					USART_SendData (USART2, 13);
-				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
-				
-					
-				/*
-			while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){}
-				//send_uart = (char)(angle_raw_16&0xFF);
-				sprintf((char*)str,"%04d", ii);
-			USART_SendData (USART2, str )	;
-				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){}
-			USART_SendData (USART2, '\n')	; */
-			
-			/*
-			t_uart = TIM5->CNT;
-					ii++;
-			
-		}
-		
-		
-		
-	*/	
-		
-		
-	//arm_fir_f32(&S, &angle, &outputF32, blockSize);	
-
 		
 	des_val = (float)ADC_average*360/4095 + 180;
 		
@@ -222,13 +170,6 @@ void ADC_IRQHandler()
 		}
 		
 		 
-		
-			//Speed = (float)(ADC_GetConversionValue(ADC1))*6/4095; // used for potentiometr speed control
-		//	des_val_raw = ADC_GetConversionValue(ADC1);//*360/4095; // used for potentiometr angle tracking
-			
-			
-			
-			//alpha = (float)(ADC_GetConversionValue(ADC1))*360/4095;
 			
 			ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 1, ADC_SampleTime_480Cycles);
 	    ADC_SoftwareStartConv(ADC1);

@@ -30,14 +30,28 @@ Build target 'Target 1'
 compiling main.c...
 .\LIB\as5048\as5048.h(80): warning:  #1-D: last line of file ends without a newline
   float CQ_IIRF_angle(void);
-main.c(132): warning:  #9-D: nested comment is not allowed
-  				/*
-main.c(42): warning:  #177-D: variable "firStateF32"  was declared but never referenced
-  static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS - 1];
-main.c: 3 warnings, 0 errors
+main.c: 1 warning, 0 errors
+compiling as5048.c...
+LIB\as5048\as5048.h(80): warning:  #1-D: last line of file ends without a newline
+  float CQ_IIRF_angle(void);
+LIB\as5048\as5048.c(189): warning:  #940-D: missing return statement at end of non-void function "median" 
+  	}	
+LIB\as5048\as5048.c(276): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  		angle_return = angle_return*0.021973997;
+LIB\as5048\as5048.c(363): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	return 	(float)(ResData2 & 0x3FFF)*0.021973997;	
+LIB\as5048\as5048.c(564): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  				arr_CQ[i] = get_angle()*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
+LIB\as5048\as5048.c(586): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  			a_i_CQ = raw_value*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
+LIB\as5048\as5048.c(726): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  			a_i_CQ = raw_value*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
+LIB\as5048\as5048.c(819): warning:  #1-D: last line of file ends without a newline
+  	
+LIB\as5048\as5048.c: 8 warnings, 0 errors
 linking...
-Program Size: Code=15552 RO-data=2640 RW-data=380 ZI-data=14724  
-".\Objects\SPI_FOC.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=14924 RO-data=2636 RW-data=356 ZI-data=12724  
+".\Objects\SPI_FOC.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -73,7 +87,7 @@ Package Vendor: Keil
       Library file:  CMSIS\Lib\ARM\arm_cortexM4lf_math.lib
 
    * Component: ARM::CMSIS:CORE:5.0.1
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
