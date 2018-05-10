@@ -14,7 +14,7 @@
 #define Pole_Pairs 12
 #define Vdc 				12
 #define Pi 3.1415926535897932384
-
+#define CALIBRATION_MODE 1
 
 
 

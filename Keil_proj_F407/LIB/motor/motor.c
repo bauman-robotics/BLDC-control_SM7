@@ -146,8 +146,10 @@ void FOC_InitPosition(void) // establishing zero position, d-axis directed to A 
   TIM1->CCR3 = (uint32_t)(3*PWM_period/Vdc)  ;
 	
 	*/
-	/*
-	Vq=4;
+	if(CALIBRATION_MODE)
+	{
+	
+	Vq=2;
 	
 	Va_1 = arm_cos_f32(0);//cos(theta         );     
 	Vb_1 = arm_cos_f32(0 - 2.0943951023931954923084289221863);//cos(theta - 2.0943951023931954923084289221863 ); //2*Pi/3
@@ -165,15 +167,17 @@ void FOC_InitPosition(void) // establishing zero position, d-axis directed to A 
   TIM1->CCR2 = (uint32_t)(Vinv2*PWM_period/Vdc)  ;
   TIM1->CCR3 = (uint32_t)(Vinv3*PWM_period/Vdc)  ;
 	
-	*/
+	
 	
 	myDelay_ms(1000);	
-	
-	
+	angle_init = CQ_average_angle();
+}
 	// init angle was calculated once. Now it is used like starting point for electrical angles and engine does not need position initialization
-	
-	angle_init = 15.95;//CQ_average_angle();//get_angle();//average_angle() ;
+	else
+	{
+	angle_init = -79.2091141;//CQ_average_angle();//get_angle();//average_angle() ;
 	error_angle_last = 0;
+	}
 	
 }
 
@@ -207,14 +211,18 @@ void FOC(float angle, float error_angle, float K_p, float K_d)
 		er_mem = error_angle;
 		angle_mem = angle;
 	}
-	Vq = K_p*error_angle  ;//+ (error_angle - error_angle_last)*K_d; //Speed; //
+	Vq = K_p*error_angle  + (error_angle - error_angle_last)*K_d; //Speed; //
 	error_angle_last = error_angle;
 	
 	
 	
+	if(Vq < 2) Vq = -2; // 6V = Vdc/2 , voltage limitation
+	if(Vq > 2) Vq = 2;
+	
+	/*
 	if(Vq < -6) Vq = -6; // 6V = Vdc/2 , voltage limitation
 	if(Vq > 6) Vq = 6;
-	
+	*/
 	
 	
 	Va_1 = arm_cos_f32(theta);//cos(theta         );     

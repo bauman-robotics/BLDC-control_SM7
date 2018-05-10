@@ -8,6 +8,7 @@
 #include "mylib.h"
 #include "init.h"
 #include "motor.h"
+#include <stdio.h>
 
 //#include "tm_stm32f4_delay.h"
 	
@@ -15,9 +16,11 @@ float angle, angle_error, angle_test;
 float des_val,des_val1;
 uint32_t t1, t2, t3, t4, dt1, dt22, p;
 
+uint16_t ii;
+
 float voltage, current;
 
-
+uint16_t angle_raw_16;
 
 // moving average filter variables
 
@@ -32,13 +35,31 @@ uint8_t filled_ADC;
   uint32_t sum_ADC;
 
 
+#define BLOCK_SIZE            1
+#define NUM_TAPS              501
 
 
+static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS - 1];
+/*
+const float32_t firCoeffs32[NUM_TAPS] = { 
+	
+};*/
+uint32_t blockSize = BLOCK_SIZE;
+ float32_t outputF32;
+
+
+uint32_t t_uart;
+char send_uart;
+
+char str[7];
 
 int main(void)
 	
 {
+	 //arm_fir_instance_f32 S;
 	
+	
+//	arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], blockSize);
 	
 	
 	
@@ -57,18 +78,17 @@ int main(void)
 	PWM_ENx_ini();// PWM LED Visualisation
 	
 	ADC_initt();
-	//Set_nRes_nSleep();
-	//GPIO_SetBits(GPIOA, GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3); // EN1,2,3 to 1 enable all half-bridges
+	
 	FOC_InitPosition();
 	
 	
+//	USART_2_init();
 	
 	
-	
-		des_val = 30; ///////////////
+	//	des_val = -71; ///////////////
 
 
-
+//t_uart = TIM5->CNT;
 
 
 	
@@ -79,14 +99,61 @@ int main(void)
 	
 	
 	t1 = TIM5->CNT;
-	angle = CQ_average_angle();//ThirdOrder_average();//average_angle();
+		
+	
+	angle = CQ_average_angle();//CQ_average_angle();//CQ_IIRF_angle();//CQ_average_angle();//ThirdOrder_average();//average_angle();
 
 		
-	des_val = (float)ADC_average*360/4095;
+		
+		/*
+		
+		
+		if(TIM5->CNT - t_uart > 10000)
+		{
+			while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){}
+				//send_uart = (char)(angle_raw_16>>8);
+				//send_uart = 'f';
+				sprintf(str,"%4d" , angle_raw_16 );
+	        USART_SendData (USART2, str[0]);
+				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
+					USART_SendData (USART2, str[1]);
+				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
+					USART_SendData (USART2, str[2]);
+				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
+					USART_SendData (USART2, str[3]);
+				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
+				
+					USART_SendData (USART2, 13);
+				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){};
+				
+					
+				/*
+			while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){}
+				//send_uart = (char)(angle_raw_16&0xFF);
+				sprintf((char*)str,"%04d", ii);
+			USART_SendData (USART2, str )	;
+				while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET){}
+			USART_SendData (USART2, '\n')	; */
+			
+			/*
+			t_uart = TIM5->CNT;
+					ii++;
+			
+		}
+		
+		
+		
+	*/	
+		
+		
+	//arm_fir_f32(&S, &angle, &outputF32, blockSize);	
+
+		
+	des_val = (float)ADC_average*360/4095 + 180;
 		
 	angle_error = des_val - angle;
 
-	FOC(angle, angle_error, 0.2, 0.5)	;
+	FOC(angle, angle_error, 0.3, 150)	;
 
 		t2 = TIM5->CNT;
 	  dt1 = t2 - t1;

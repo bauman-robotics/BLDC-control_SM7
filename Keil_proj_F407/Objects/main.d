@@ -41,3 +41,4 @@
 .\objects\main.o: .\LIB\mylib.h
 .\objects\main.o: .\LIB\ini\init.h
 .\objects\main.o: .\LIB\motor\motor.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

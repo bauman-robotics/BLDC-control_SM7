@@ -1,6 +1,7 @@
 #include "as5048.h"
-#include "mylib.h"
 
+
+#include "mylib.h"
 
 uint16_t ResData1, ResData2, ResData_err;
 
@@ -119,10 +120,91 @@ void encoder_as5048_SPI3(void)
 	
 	
 	
+	// median filter
+	float mf_buf[3];
+	uint8_t i_m, mf_ready;
+		float middle;
+	
+/*	
+float	median(float* mid_buf)
+	{
+		 if ((mid_buf[0] <= mid_buf[1]) && (mid_buf[0] <= mid_buf[2]))
+ {
+   middle = (mid_buf[1] <= mid_buf[2]) ? mid_buf[1] : mid_buf[2];
+ }
+ else if ((mid_buf[1] <= mid_buf[0]) && (mid_buf[1] <= mid_buf[2]))
+ {
+   middle = (mid_buf[0] <= mid_buf[2]) ? mid_buf[0] : mid_buf[2];
+ }
+ else
+ {
+   middle = (mid_buf[0] <= mid_buf[1]) ? mid_buf[0] : mid_buf[1];
+ }
+ return middle;
+	}
+	
+	*/
+	
+	float	median(float input)
+	{
+		if(!mf_ready)
+		{
+			mf_buf[i_m] = input;
+			i_m++;
+			middle = input;
+			
+			if(i_m>=3) 
+				{
+					
+					mf_ready=1;
+					i_m=0;
+				}
+		}
+		else
+		{
+			
+			mf_buf[i_m] = input;
+			i_m++;
+			if(i_m>=3) i_m=0;
+				
+			
+		
+		 if ((mf_buf[0] <= mf_buf[1]) && (mf_buf[0] <= mf_buf[2]))
+			{
+				middle = (mf_buf[1] <= mf_buf[2]) ? mf_buf[1] : mf_buf[2];
+			}
+		else if ((mf_buf[1] <= mf_buf[0]) && (mf_buf[1] <= mf_buf[2]))
+			{
+				middle = (mf_buf[0] <= mf_buf[2]) ? mf_buf[0] : mf_buf[2];
+			}
+		else
+			{
+				middle = (mf_buf[0] <= mf_buf[1]) ? mf_buf[0] : mf_buf[1];
+			}
+		return middle;
+			
+			
+			
+		}
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	extern uint16_t angle_raw_16;
 	uint32_t counter_;
  	uint16_t MODF;
 	uint8_t pr;
 	float angle_return;
+		uint8_t  flag_catch;
+	float angle_return, fv;
+	
 	
 	float get_angle(void) // with SPI3
 	{
@@ -183,9 +265,36 @@ void encoder_as5048_SPI3(void)
 			*/
 			
 		
-	//angle = (float)(ResData2 & 0x3FFF)*0.021973997;	
-		angle_return = (float)(ResData2 & 0x3FFF);
+	//angle = (float)(ResData2 & 0x3FFF)*0.021973997;
+
+		angle_raw_16 = ResData2 & 0x3FFF;
+
+		angle_return = (float)(angle_raw_16);
+		
+		
+		
 		angle_return = angle_return*0.021973997;
+		
+		
+		
+		
+		if(angle_return>150)
+		{
+			flag_catch = 1;
+		}
+
+		angle_return = median(angle_return); // median filter
+		
+		
+		if(flag_catch)
+		{
+			fv = angle_return;
+			flag_catch=0;
+			
+		}
+		
+		
+		
 	return 	angle_return;//(float)(ResData2 & 0x3FFF)*0.021973997;	
 			
 			
@@ -562,3 +671,149 @@ void encoder_as5048_SPI3(void)
 	}
 	
 	*/
+	IIR_filter_typedef fsine1;
+			IIR_filter_typedef fsine2;
+			IIR_filter_typedef fsine3;
+			
+			
+			IIR_filter_typedef fcos1;
+			IIR_filter_typedef fcos2;
+			IIR_filter_typedef fcos3;
+			
+	
+	uint8_t CQ_IIRF;
+	
+	float CQ_IIRF_angle(void) // Circular quantities IIR filtered angle
+	{
+		
+		
+		
+		if(!CQ_IIRF)
+		{
+			
+			
+	fsine1.b[0]= 0.024016801444274666     ; fsine1.b[1]=-0.047202999722052032     ; fsine1.b[2]=  0.024016801444274666     ;
+	fsine1.a[0]=1 ; fsine1.a[1]=-1.9449352224683314       ; fsine1.a[2]= 0.94576582563482858      ;
+			
+	fsine2.b[0]= 0.94576582563482858       ; fsine2.b[1]=-0.44715825182338509      ; fsine2.b[2]= 0.22385929993807971       ;
+	fsine2.a[0]=1 ; fsine2.a[1]=-1.9880721258078364        ; fsine2.a[2]= 0.98871702484529134       ;		
+	
+	fsine3.b[0]=  0.17858124414512755       ; fsine3.b[1]=-0.35632880552578683      ; fsine3.b[2]= 0.1785812441451276         ;
+	fsine3.a[0]=1 ; fsine3.a[1]=-1.9646507902449557        ; fsine3.a[2]=  0.96537517109617399        ;
+
+
+
+
+
+
+
+	/*		
+	fcos1.b[0]=0.0033189100679041354     ; fcos1.b[1]=0.0033189100679041354     ; fcos1.b[2]=0;
+	fcos1.a[0]=1 ; fcos1.a[1]=-0.99336217986419173      ; fcos1.a[2]= 0   ;
+			
+	fcos2.b[0]=  0.12750785034731185       ; fcos2.b[1]=-0.25498606399791035       ; fcos2.b[2]=  0.12750785034731191       	 ;
+	fcos2.a[0]=1 ; fcos2.a[1]=-1.9965123169165897       ; fcos2.a[2]= 0.99654949945221294       ;		
+	
+	fcos3.b[0]= 0.084817749240989254     ; fcos3.b[1]=-0.16958389083412559      ; fcos3.b[2]= 0.084817749240989254      ;
+	fcos3.a[0]=1 ; fcos3.a[1]=-1.9899652363002902        ; fcos3.a[2]= 0.99000637067108765          ;				
+		*/	
+			
+			CQ_IIRF=1;
+			
+		}
+		
+			raw_value = get_angle();
+			a_i_CQ = raw_value*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
+			sine_i = arm_sin_f32(a_i_CQ);
+			cos_i = arm_cos_f32(a_i_CQ);
+		
+		
+		
+		//sine
+		
+		//1
+		
+	 fsine1.buf_x[2]=fsine1.buf_x[1]; fsine1.buf_x[1]=fsine1.buf_x[0]; fsine1.buf_x[0]= sine_i;
+		
+	 fsine1.buf_y[0] = fsine1.buf_x[0]*fsine1.b[0]+fsine1.buf_x[1]*fsine1.b[1]+fsine1.buf_x[2]*fsine1.b[2] - fsine1.buf_y[1]*fsine1.a[1] - fsine1.buf_y[2]*fsine1.a[2];
+	 fsine1.buf_y[2] =fsine1.buf_y[1]; fsine1.buf_y[1] = fsine1.buf_y[0];
+	 
+	 //2
+	 fsine2.buf_x[2]=fsine2.buf_x[1]; fsine2.buf_x[1]=fsine2.buf_x[0]; fsine2.buf_x[0] = fsine1.buf_y[0];
+	 fsine2.buf_y[0] = fsine2.buf_x[0]*fsine2.b[0]+fsine2.buf_x[1]*fsine2.b[1]+fsine2.buf_x[2]*fsine2.b[2] - fsine2.buf_y[1]*fsine2.a[1] - fsine2.buf_y[2]*fsine2.a[2];
+	 fsine2.buf_y[2] = fsine2.buf_y[1]; fsine2.buf_y[1] = fsine2.buf_y[0];
+	 
+	 //3
+	 fsine3.buf_x[2]=fsine3.buf_x[1]; fsine3.buf_x[1]=fsine3.buf_x[0]; fsine3.buf_x[0] = fsine2.buf_y[0];
+	 fsine3.buf_y[0] = fsine3.buf_x[0]*fsine3.b[0]+fsine3.buf_x[1]*fsine3.b[1]+fsine3.buf_x[2]*fsine3.b[2] - fsine3.buf_y[1]*fsine3.a[1] - fsine3.buf_y[2]*fsine3.a[2];
+	 fsine3.buf_y[2] = fsine3.buf_y[1]; fsine3.buf_y[1] = fsine3.buf_y[0];
+	 
+	 /*
+	 //4
+	 fsine4.buf_x[2]=fsine4.buf_x[1]; fsine4.buf_x[1]=fsine4.buf_x[0]; fsine4.buf_x[0] = fsine3.buf_y[0];
+	 fsine4.buf_y[0] = fsine4.buf_x[0]*fsine4.b[0]+fsine4.buf_x[1]*fsine4.b[1]+fsine4.buf_x[2]*fsine4.b[2] - fsine4.buf_y[1]*fsine4.a[1] - fsine4.buf_y[2]*fsine4.a[2];
+	 fsine4.buf_y[2] = fsine4.buf_y[1]; fsine4.buf_y[1] = fsine4.buf_y[0];
+	 
+	 
+	 //5	 
+	 fsine5.buf_x[2]=fsine4.buf_x[1]; fsine4.buf_x[1]=fsine4.buf_x[0]; fsine4.buf_x[0] = fsine3.buf_y[0];
+	 fsine4.buf_y[0] = fsine4.buf_x[0]*fsine4.b[0]+fsine4.buf_x[1]*fsine4.b[1]+fsine4.buf_x[2]*fsine4.b[2] - fsine4.buf_y[1]*fsine4.a[1] - fsine4.buf_y[2]*fsine4.a[2];
+	 fsine4.buf_y[2] = fsine4.buf_y[1]; fsine4.buf_y[1] = fsine4.buf_y[0];
+	 */
+	 
+	 
+	 
+	 
+	 
+	  fcos1.buf_x[2]=fcos1.buf_x[1]; fcos1.buf_x[1]=fcos1.buf_x[0]; fcos1.buf_x[0]= cos_i;
+	 fcos1.buf_y[0] = fcos1.buf_x[0]*fsine1.b[0]+fcos1.buf_x[1]*fsine1.b[1]+fcos1.buf_x[2]*fsine1.b[2] - fcos1.buf_y[1]*fsine1.a[1] - fcos1.buf_y[2]*fsine1.a[2];
+	 fcos1.buf_y[2] =fcos1.buf_y[1]; fcos1.buf_y[1] = fcos1.buf_y[0];
+	 
+	 
+	 fcos2.buf_x[2]=fcos2.buf_x[1]; fcos2.buf_x[1]=fcos2.buf_x[0]; fcos2.buf_x[0] = fcos1.buf_y[0];
+	 fcos2.buf_y[0] = fcos2.buf_x[0]*fsine2.b[0]+fcos2.buf_x[1]*fsine2.b[1]+fcos2.buf_x[2]*fsine2.b[2] - fcos2.buf_y[1]*fsine2.a[1] - fcos2.buf_y[2]*fsine2.a[2];
+	 fcos2.buf_y[2] = fcos2.buf_y[1]; fcos2.buf_y[1] = fcos2.buf_y[0];
+	 
+	 
+	 fcos3.buf_x[2]=fcos3.buf_x[1]; fcos3.buf_x[1]=fcos3.buf_x[0]; fcos3.buf_x[0] = fcos2.buf_y[0];
+	 fcos3.buf_y[0] = fcos3.buf_x[0]*fsine3.b[0]+fcos3.buf_x[1]*fsine3.b[1]+fcos3.buf_x[2]*fsine3.b[2] - fcos3.buf_y[1]*fsine3.a[1] - fcos3.buf_y[2]*fsine3.a[2];
+	 fcos3.buf_y[2] = fcos3.buf_y[1]; fcos3.buf_y[1] = fcos3.buf_y[0];
+	 
+	 
+	 
+	 
+	 /*
+	 fcos1.buf_x[2]=fcos1.buf_x[1]; fcos1.buf_x[1]=fcos1.buf_x[0]; fcos1.buf_x[0]= cos_i;
+	 fcos1.buf_y[0] = fcos1.buf_x[0]*fcos1.b[0]+fcos1.buf_x[1]*fcos1.b[1]+fcos1.buf_x[2]*fcos1.b[2] - fcos1.buf_y[1]*fcos1.a[1] - fcos1.buf_y[2]*fcos1.a[2];
+	 fcos1.buf_y[2] =fcos1.buf_y[1]; fcos1.buf_y[1] = fcos1.buf_y[0];
+	 
+	 
+	 fcos2.buf_x[2]=fcos2.buf_x[1]; fcos2.buf_x[1]=fcos2.buf_x[0]; fcos2.buf_x[0] = fcos1.buf_y[0];
+	 fcos2.buf_y[0] = fcos2.buf_x[0]*fcos2.b[0]+fcos2.buf_x[1]*fcos2.b[1]+fcos2.buf_x[2]*fcos2.b[2] - fcos2.buf_y[1]*fcos2.a[1] - fcos2.buf_y[2]*fcos2.a[2];
+	 fcos2.buf_y[2] = fcos2.buf_y[1]; fcos2.buf_y[1] = fcos2.buf_y[0];
+	 
+	 
+	 fcos3.buf_x[2]=fcos3.buf_x[1]; fcos3.buf_x[1]=fcos3.buf_x[0]; fcos3.buf_x[0] = fcos2.buf_y[0];
+	 fcos3.buf_y[0] = fcos3.buf_x[0]*fcos3.b[0]+fcos3.buf_x[1]*fcos3.b[1]+fcos3.buf_x[2]*fcos3.b[2] - fcos3.buf_y[1]*fcos3.a[1] - fcos3.buf_y[2]*fcos3.a[2];
+	 fcos3.buf_y[2] = fcos3.buf_y[1]; fcos3.buf_y[1] = fcos3.buf_y[0];
+		*/
+		
+		X_i_CQ  = atan2(fsine3.buf_y[0], fcos3.buf_y[0])*57.295779513082320876798154814105 ;
+		return (float)X_i_CQ;
+			
+			//sine_sum = sine_sum - sine_arr[k_CQ] + sine_i;
+			//cos_sum = cos_sum - cos_arr[k_CQ] + cos_i;
+			//sine_av = sine_sum/window;
+			//cos_av = cos_sum/window;
+			//X_i_CQ  = atan2(sine_av, cos_av)*57.295779513082320876798154814105 ;
+			
+			//sine_arr[k_CQ] = sine_i;
+			//cos_arr[k_CQ] = cos_i;
+			 // substitute thrown out value with new value for cycling
+			//k_CQ++;
+			//if(k_CQ >= window) k_CQ=0; // array loop
+			//return X_i_CQ;
+			
+		}
+		
+	

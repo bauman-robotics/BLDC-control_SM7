@@ -6,7 +6,7 @@
 
 
 
-#define window 50
+#define window 100
 #define window_ADC 2000
 
 
@@ -14,6 +14,15 @@
 #define CS3_OFF() GPIO_SetBits(GPIOC, GPIO_Pin_9)
 
 
+typedef struct
+{
+	double buf_x[3];
+	double buf_y[3];
+	double a[4];
+	double b[4];
+	
+		
+}IIR_filter_typedef;
 
 
 
@@ -68,3 +77,4 @@ float get_angle_once(void);
 float  SecondOrder_average(void);
 float ThirdOrder_average(void);
 float CQ_average_angle(void);
+float CQ_IIRF_angle(void);
