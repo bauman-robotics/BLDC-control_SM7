@@ -1,5 +1,6 @@
-# BLDC-control
-#In process
+# Hoverboard BLDC-control
+
+## Motor-wheel based servo has been created with as5048 encoder and simplified field oriented control (no current sensing)
  
  ### YOUTUBE VIDEO ###
  
