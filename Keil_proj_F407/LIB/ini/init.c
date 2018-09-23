@@ -263,7 +263,12 @@ TIM_OC1Init(TIM1, &TIM_OCStruct);
  
  
  
- /*Инвертирование каналов для платы Федора, полярность Low*/
+ 
+ 
+ 
+ 
+//------------------------------------------------------------------ 
+ /*Инвертирование каналов для новой платы, полярность Low*/
  #define CC1NP_LOW (0x1)<<3
  #define CC1P_LOW (0x1)<<1
  #define CC2NP_LOW (0x1)<<7
@@ -271,6 +276,13 @@ TIM_OC1Init(TIM1, &TIM_OCStruct);
  #define CC3NP_LOW (0x1)<<11
  #define CC3P_LOW (0x1)<<9
  TIM1->CCER = CC1NP_LOW|CC1P_LOW|CC2NP_LOW|CC2P_LOW|CC3NP_LOW|CC3P_LOW;
+ //---------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  TIM_BDTRInitStructure.TIM_OSSRState = TIM_OSSRState_Enable;
