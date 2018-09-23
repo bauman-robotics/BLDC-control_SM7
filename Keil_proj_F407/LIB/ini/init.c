@@ -3,7 +3,9 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "init.h"
-
+#include "stm32f4xx_exti.h"
+#include "stm32f4xx_syscfg.h"
+#include "misc.h"
 
 
 
@@ -250,20 +252,31 @@ GPIO_InitTypeDef GPIO_InitStructure;
 
 // PWM_ Configuration
  TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM1;
- TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_High;
+ TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;//TIM_OCPolarity_High;
  TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
  TIM_OCStruct.TIM_OutputNState = TIM_OutputNState_Enable;
- TIM_OCStruct.TIM_OCNPolarity = TIM_OCNPolarity_High; 
+ TIM_OCStruct.TIM_OCNPolarity = TIM_OCPolarity_Low;//TIM_OCNPolarity_High; 
  TIM_OCStruct.TIM_Pulse = 0;
 
 TIM_OC1Init(TIM1, &TIM_OCStruct);
  TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
  
  
+ 
+ /*Инвертирование каналов для платы Федора, полярность Low*/
+ #define CC1NP_LOW (0x1)<<3
+ #define CC1P_LOW (0x1)<<1
+ #define CC2NP_LOW (0x1)<<7
+ #define CC2P_LOW (0x1)<<5
+ #define CC3NP_LOW (0x1)<<11
+ #define CC3P_LOW (0x1)<<9
+ TIM1->CCER = CC1NP_LOW|CC1P_LOW|CC2NP_LOW|CC2P_LOW|CC3NP_LOW|CC3P_LOW;
+ 
+ 
  TIM_BDTRInitStructure.TIM_OSSRState = TIM_OSSRState_Enable;
  TIM_BDTRInitStructure.TIM_OSSIState = TIM_OSSIState_Enable;
  TIM_BDTRInitStructure.TIM_LOCKLevel = TIM_LOCKLevel_OFF;
- TIM_BDTRInitStructure.TIM_DeadTime = 168; // 1 microsec
+ TIM_BDTRInitStructure.TIM_DeadTime = 168; // 1 microsec(168)
  TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;
  TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;
  TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Disable;
@@ -286,4 +299,60 @@ TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
  
  
 
+}
+
+
+void TIM2_ini(void)
+{
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	
+	TIM_TimeBaseInitTypeDef timer2_init;
+	TIM_TimeBaseStructInit(&timer2_init);
+	timer2_init.TIM_Period = 4200-1;// ---> 100 microsec
+	timer2_init.TIM_Prescaler = 2-1; // ---> 42 MHz
+	TIM_TimeBaseInit(TIM2, &timer2_init);
+	
+	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+
+	
+		NVIC_InitTypeDef NVIC_InitStructure;
+
+NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+NVIC_Init(&NVIC_InitStructure);
+	
+	
+	
+	TIM_Cmd(TIM2, ENABLE);
+}
+
+
+
+
+void TIM7_ini(void) // TIM for FOC control loop
+{
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
+	
+	TIM_TimeBaseInitTypeDef timer7_init;
+	TIM_TimeBaseStructInit(&timer7_init);
+	timer7_init.TIM_Period = 4200-1;// ---> 10kHz
+	timer7_init.TIM_Prescaler = 2-1; // ---> 42 MHz
+	TIM_TimeBaseInit(TIM7, &timer7_init);
+	
+	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
+
+	
+		NVIC_InitTypeDef NVIC_InitStructure;
+
+NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
+NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+NVIC_Init(&NVIC_InitStructure);
+	
+	
+	
+	TIM_Cmd(TIM7, ENABLE);
 }

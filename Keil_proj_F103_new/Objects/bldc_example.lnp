@@ -1,0 +1,19 @@
+--cpu Cortex-M3
+".\objects\bldc.o"
+".\objects\main.o"
+".\objects\as5048a.o"
+".\objects\mylib.o"
+".\objects\misc.o"
+".\objects\stm32f10x_adc.o"
+".\objects\stm32f10x_dma.o"
+".\objects\stm32f10x_exti.o"
+".\objects\stm32f10x_gpio.o"
+".\objects\stm32f10x_rcc.o"
+".\objects\stm32f10x_tim.o"
+".\objects\stm32f10x_usart.o"
+".\objects\startup_stm32f10x_md.o"
+".\objects\system_stm32f10x.o"
+--strict --scatter ".\Objects\bldc_example.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\bldc_example.map" -o .\Objects\bldc_example.axf

@@ -1,0 +1,8 @@
+#ifndef CURRENT_VISUAL_H
+#define CURRENT_VISUAL_H
+
+
+
+
+
+#endif // CURRENT_VISUAL_H

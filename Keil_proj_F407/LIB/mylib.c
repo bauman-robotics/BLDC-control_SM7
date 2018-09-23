@@ -3,6 +3,7 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "mylib.h"
+#include "math.h"
 
 
 
@@ -139,11 +140,11 @@ void USART_2_init(void) //PD6,PD5
 	 
 	 USART_Init(USART2, &USART2_user);
 	 
-	 /*
+	 
 	 	NVIC_InitTypeDef NVIC_InitStructure2;
 
 NVIC_InitStructure2.NVIC_IRQChannel = USART2_IRQn;
-NVIC_InitStructure2.NVIC_IRQChannelPreemptionPriority = 1;
+NVIC_InitStructure2.NVIC_IRQChannelPreemptionPriority = 5;
 NVIC_InitStructure2.NVIC_IRQChannelSubPriority = 0;
 NVIC_InitStructure2.NVIC_IRQChannelCmd = ENABLE;
 NVIC_Init(&NVIC_InitStructure2);
@@ -153,13 +154,192 @@ NVIC_Init(&NVIC_InitStructure2);
 	 //NVIC_EnableIRQ(USART2_IRQn);
 	 USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
 	 
-	 */
+	 
 	 
 	 USART_Cmd(USART2, ENABLE);
  }
 
 
 
+
+void fill_sine(float* sine_arr, float steps)
+{
+		for ( int i =0; i < steps; i++)
+			{
+		    //sine_arr[i] = sin( ((float)(i/(steps-1)) *2*Pi))*40 + 120;
+				sine_arr[i] = sin( ((float)(i/(steps-1)) *2*Pi))*90 ;
+			}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-----------Send byte
+
+void UART_send_byte(uint8_t byte)
+{
+	USART_SendData (USART2, (uint16_t)byte);
+	while (!USART_GetFlagStatus(USART2, USART_FLAG_TXE)) {}
+}
+
+
+
+
+
+// send 16 bit value
+
+void UART2_Send_16bValue(uint16_t data, char key)
+{
+					//Деление на 2 байта и добавление символа '\n'
+	uint8_t	Data_L = (uint8_t)(data&0x00FF);
+	uint8_t	Data_H = (uint8_t)((data&0xFF00)>>8);
+	UART_send_byte((uint8_t)('\n'));
+	UART_send_byte((uint8_t)key);
+	UART_send_byte(Data_L);
+	UART_send_byte(Data_H);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void send_finish_sequence(void)
+{
+	UART_send_byte((uint8_t)('f'));
+	UART_send_byte((uint8_t)('i'));
+	UART_send_byte((uint8_t)('n'));
+	UART_send_byte((uint8_t)('i'));
+	UART_send_byte((uint8_t)('s'));
+	UART_send_byte((uint8_t)('h'));
+	UART_send_byte((uint8_t)('e'));
+	UART_send_byte((uint8_t)('d'));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+uint8_t qt_get_oscillogram(Osc_qt_TypeDef* Osc_struct, int16_t* Osc_data)
+{
+
+		
+			if(Osc_struct->osc_cnt< Osc_struct->samples) // если осциллограмма не заполнена - заполнять
+			{
+                if(Osc_struct->samp_cnt< Osc_struct->prescaler) // выборка значений с заданной частотой
+                {
+                    Osc_struct->samp_cnt++;
+                }
+                else
+                {
+                    Osc_struct->samp_cnt=0;
+									
+									
+											Osc_struct->data_storage[Osc_struct->osc_cnt]	=	*Osc_data;
+											Osc_struct->osc_cnt++;
+											
+								}
+									
+                    
+			        
+			}
+			else
+			{
+				Osc_struct->ready = 1; // флаг готовности осциллограммы
+				
+				//--
+				//motor_run=0;
+				//motor_mode=COMMON_MODE;
+				//MDR_TIMER3->CCR4 = 2000; // остановить мотор
+				//--
+				
+			}
+			
+			
+			if(Osc_struct->ready)
+			{
+				
+					if(	(	Osc_struct->transmit_cnt	<	Osc_struct->samples	)	) // передавать, пока не будет передан весь массив
+						{		
+			
+							UART2_Send_16bValue(Osc_struct->data_storage[Osc_struct->transmit_cnt], 'a');
+							
+												
+							Osc_struct->transmit_cnt++;
+			
+						}
+				else
+						{
+							Osc_struct->transmission_finished = 1; // осциллограмма передана
+						}
+				
+				
+			}
+			
+			if(Osc_struct->transmission_finished) // по завершении передачи отправить завершающую последовательность
+				{
+					myDelay_ms(100);//Delay_ms_func(100);
+					send_finish_sequence();
+					Osc_struct->osc_cnt=0;
+					Osc_struct->samp_cnt=0;
+					Osc_struct->ready=0;
+					Osc_struct->transmit_cnt=0;
+					Osc_struct->transmission_finished=0;
+					Osc_struct->enable=0;
+					
+					return 0;
+				}
+				
+	return 1;
+        
+       
+	
+}
 
 
 

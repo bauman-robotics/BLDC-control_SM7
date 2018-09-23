@@ -13,6 +13,9 @@ void myDelay_microsec(uint32_t delay);
 void myDelay_ms(uint32_t delay);
 void BLDC_PWMTimerInit(void) ;
 
+void TIM7_ini(void);
+
+
 #define PWM_period 2100//3200
 
 

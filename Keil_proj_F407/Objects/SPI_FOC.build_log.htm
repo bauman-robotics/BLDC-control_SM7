@@ -22,36 +22,12 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 D:\MEGA cloud\GitHub\BLDC-control_SM7\Keil_proj_F407\SPI_FOC.uvprojx
-Project File Date:  01/30/2018
+Project File Date:  07/29/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling main.c...
-.\LIB\as5048\as5048.h(80): warning:  #1-D: last line of file ends without a newline
-  float CQ_IIRF_angle(void);
-main.c: 1 warning, 0 errors
-compiling as5048.c...
-LIB\as5048\as5048.h(80): warning:  #1-D: last line of file ends without a newline
-  float CQ_IIRF_angle(void);
-LIB\as5048\as5048.c(189): warning:  #940-D: missing return statement at end of non-void function "median" 
-  	}	
-LIB\as5048\as5048.c(276): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  		angle_return = angle_return*0.021973997;
-LIB\as5048\as5048.c(363): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	return 	(float)(ResData2 & 0x3FFF)*0.021973997;	
-LIB\as5048\as5048.c(564): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  				arr_CQ[i] = get_angle()*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
-LIB\as5048\as5048.c(586): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  			a_i_CQ = raw_value*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
-LIB\as5048\as5048.c(726): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  			a_i_CQ = raw_value*0.01745329251994329576923690768489 ;//Pi/180; // translating into radians;
-LIB\as5048\as5048.c(819): warning:  #1-D: last line of file ends without a newline
-  	
-LIB\as5048\as5048.c: 8 warnings, 0 errors
-linking...
-Program Size: Code=14924 RO-data=2636 RW-data=356 ZI-data=12724  
-".\Objects\SPI_FOC.axf" - 0 Error(s), 9 Warning(s).
+".\Objects\SPI_FOC.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -61,6 +37,13 @@ Package Vendor: ARM
                 CMSIS (Cortex Microcontroller Software Interface Standard)
    * Component: DSP Version: 1.5.1
    * Component: CORE Version: 5.0.1
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.ARM_Compiler.1.3.1.pack
+                Keil.ARM_Compiler.1.3.1
+                Keil ARM Compiler extensions for ARM Compiler 5 and ARM Compiler 6
+   * Component: STDOUT Variant: ITM Version: 1.2.0
+   * Component: STDIN Variant: ITM Version: 1.2.0
 
 Package Vendor: Keil
                 http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.11.0.pack
@@ -82,12 +65,18 @@ Package Vendor: Keil
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c
 
+   * Component: Keil.ARM Compiler::Compiler:I/O:STDOUT:ITM:1.2.0
+      Source file:   Source\retarget_io.c
+
+   * Component: Keil.ARM Compiler::Compiler:I/O:STDIN:ITM:1.2.0
+      Source file:   Source\retarget_io.c
+
    * Component: ARM::CMSIS:DSP:1.5.1
       Include file:  CMSIS\Include\arm_math.h
       Library file:  CMSIS\Lib\ARM\arm_cortexM4lf_math.lib
 
    * Component: ARM::CMSIS:CORE:5.0.1
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

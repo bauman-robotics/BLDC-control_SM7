@@ -1,3 +1,8 @@
+#ifndef AS5048_H
+#define AS5048_H
+
+
+
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_spi.h"
@@ -7,11 +12,16 @@
 
 
 #define window 100
-#define window_ADC 2000
+#define window_ADC 1000
+//#define SAMPLES 20000
+//#define RECORD_DATA 0
 
 
 #define CS3_ON() GPIO_ResetBits(GPIOC, GPIO_Pin_9)
 #define CS3_OFF() GPIO_SetBits(GPIOC, GPIO_Pin_9)
+
+#define CS1_ON() GPIO_ResetBits(GPIOA, GPIO_Pin_4)
+#define CS1_OFF() GPIO_SetBits(GPIOA, GPIO_Pin_4)
 
 
 typedef struct
@@ -23,6 +33,17 @@ typedef struct
 	
 		
 }IIR_filter_typedef;
+
+
+typedef struct
+{
+	float buf[3]; // buffer
+	uint8_t i_m; // counter
+	uint8_t ready; // ready flag
+	float middle; // result/output
+} MedianFilter;
+
+
 
 
 
@@ -61,10 +82,27 @@ typedef struct
 }MovingAveage_TypeDef;
 
 */
+
+
+typedef struct{
 	
-
-
-
+	uint8_t filled_CQ; // flag shows weather the buffer is filled or not
+	float sine_sum;
+	float cos_sum;	
+	float arr_CQ[window];
+	float sine_arr[window];
+	float cos_arr[window];
+	float sine_av;
+	float cos_av;
+	float X_i_CQ;
+	float a_i_CQ;
+	float sine_i;
+	float cos_i;
+	float raw_value;
+	uint16_t k_CQ;
+	
+	
+}CQ_average_filter_typedef;
 
 
 
@@ -76,5 +114,21 @@ float average_angle(void) ;
 float get_angle_once(void);
 float  SecondOrder_average(void);
 float ThirdOrder_average(void);
-float CQ_average_angle(void);
+float CQ_average_angle(CQ_average_filter_typedef* filter);
 float CQ_IIRF_angle(void);
+float	median(float input, MedianFilter* filter);
+float	median_n(float input, uint16_t order, float* buf_raw, float* buf_sorted, uint16_t* counter, uint8_t* filled_flag);
+void SPI1_init(void);
+
+
+
+
+
+
+
+
+
+
+
+
+#endif

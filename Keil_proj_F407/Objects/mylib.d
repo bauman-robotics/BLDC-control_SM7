@@ -34,3 +34,4 @@
 .\objects\mylib.o: .\LIB\SPL\inc\stm32f4xx_dcmi.h
 .\objects\mylib.o: .\LIB\SPL\inc\stm32f4xx_fsmc.h
 .\objects\mylib.o: LIB\mylib.h
+.\objects\mylib.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

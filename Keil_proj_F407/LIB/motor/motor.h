@@ -6,15 +6,22 @@
 #include "stm32f4xx_rcc.h"
 #include "init.h"
 #include "arm_math.h"
-
+#include "as5048.h"
 
 #define High			0x01
 #define Low				0x00
 #define average		 100
-#define Pole_Pairs 12
+#define Pole_Pairs 15//12
 #define Vdc 				12
 #define Pi 3.1415926535897932384
 #define CALIBRATION_MODE 1
+#define SINE_STEPS 20000
+
+
+
+#define DISABLED_MODE 0x00
+#define SINE_MODE 		0x1
+#define STATIC_MODE 	0x2
 
 
 
@@ -49,8 +56,8 @@ void sine_PWM_ini(void);
 //float average_angle(uint16_t raw_angle);
 
 
-void FOC_InitPosition(void);
-void FOC(float angle, float error_angle, float K_p, float K_d);
+void FOC_InitPosition(CQ_average_filter_typedef* filter);
+void FOC(float angle, float error_angle, float K_p, float K_d, float K_i);
 
 
 
@@ -59,7 +66,7 @@ void sinus_control_V2(float err);
 
 
 
-
+void OpenLoop_contro(float des_val_);
 
 
 
