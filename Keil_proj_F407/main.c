@@ -85,7 +85,7 @@ uint8_t res_buf_cnt; //
 
 Osc_qt_TypeDef Osc_struct_qt;
 
-uint8_t sys_mode;
+uint8_t sys_mode = 0x1;
 
 
 int main(void)
@@ -214,7 +214,7 @@ USART_2_init();
 		}
 
 	
-
+		//angle = get_angle();
 	
 	
 	}

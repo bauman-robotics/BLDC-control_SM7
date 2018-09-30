@@ -252,10 +252,10 @@ GPIO_InitTypeDef GPIO_InitStructure;
 
 // PWM_ Configuration
  TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM1;
- TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;//TIM_OCPolarity_High;
+ TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_High;//TIM_OCPolarity_Low;//TIM_OCPolarity_High;
  TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
  TIM_OCStruct.TIM_OutputNState = TIM_OutputNState_Enable;
- TIM_OCStruct.TIM_OCNPolarity = TIM_OCPolarity_Low;//TIM_OCNPolarity_High; 
+ TIM_OCStruct.TIM_OCNPolarity = TIM_OCPolarity_High;//TIM_OCPolarity_Low;//TIM_OCNPolarity_High; 
  TIM_OCStruct.TIM_Pulse = 0;
 
 TIM_OC1Init(TIM1, &TIM_OCStruct);
@@ -269,13 +269,13 @@ TIM_OC1Init(TIM1, &TIM_OCStruct);
  
 //------------------------------------------------------------------ 
  /*Инвертирование каналов для новой платы, полярность Low*/
- #define CC1NP_LOW (0x1)<<3
+ /*#define CC1NP_LOW (0x1)<<3
  #define CC1P_LOW (0x1)<<1
  #define CC2NP_LOW (0x1)<<7
  #define CC2P_LOW (0x1)<<5
  #define CC3NP_LOW (0x1)<<11
  #define CC3P_LOW (0x1)<<9
- TIM1->CCER = CC1NP_LOW|CC1P_LOW|CC2NP_LOW|CC2P_LOW|CC3NP_LOW|CC3P_LOW;
+ TIM1->CCER = CC1NP_LOW|CC1P_LOW|CC2NP_LOW|CC2P_LOW|CC3NP_LOW|CC3P_LOW;*/
  //---------------------------------------------------------------------------------
  
  
