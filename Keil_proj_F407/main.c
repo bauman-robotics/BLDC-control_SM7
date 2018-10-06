@@ -64,7 +64,7 @@ uint16_t data1, data2, data3;
 
 
 
-float Kp=0.3, Kd, Ki=0.0;
+float Kp=0.3, Kd=50, Ki=0.0002;
 
 uint8_t calibrate_flag, set_sine_freq_flag;
 
