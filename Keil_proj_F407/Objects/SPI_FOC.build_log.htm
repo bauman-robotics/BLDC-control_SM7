@@ -30,10 +30,21 @@ Build target 'Target 1'
 compiling main.c...
 main.c(134): warning:  #223-D: function "TIM2_ini" declared implicitly
   		TIM2_ini(); // Timer for setting desired sine point
-main.c: 1 warning, 0 errors
+main.c(185): warning:  #1182-D: a declaration cannot have a label
+  					float val = (float)((int16_t)receive_buffer[1]|((int16_t)receive_buffer[2])<<8);
+main.c(190): warning:  #1182-D: a declaration cannot have a label
+  					float val_ki = (float)((int16_t)receive_buffer[1]|((int16_t)receive_buffer[2])<<8);
+main.c(195): warning:  #1182-D: a declaration cannot have a label
+  					uint16_t val_kd = ((uint16_t)receive_buffer[1]|((uint16_t)receive_buffer[2])<<8);
+main.c(155): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "val"  (declared at line 185)
+            variable "val_ki"  (declared at line 190)
+  			switch (receive_buffer[0])
+  			^
+main.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=18180 RO-data=2924 RW-data=476 ZI-data=84956  
-".\Objects\SPI_FOC.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=18296 RO-data=2928 RW-data=476 ZI-data=84956  
+".\Objects\SPI_FOC.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 

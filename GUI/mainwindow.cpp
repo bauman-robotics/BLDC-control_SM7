@@ -800,3 +800,52 @@ void MainWindow::on_pushButton_2_clicked()
     data_to_send[2] = 0x00;
     port_test->write(data_to_send);
 }
+
+void MainWindow::on_pushButton_Set_angle_2_clicked()
+{
+    QByteArray data_to_send;//
+    data_to_send[0] = 'e'; // Коэффициент
+    QString raw_string_val = ui->Kp_text->toPlainText();
+    float float_val  = raw_string_val.toFloat();
+    int16_t encoded_float_val = (int16_t)(float_val*100);
+
+    data_to_send[1] = (encoded_float_val & 0xFF); // Значение int16 (float*100)
+    data_to_send[2] = (encoded_float_val & 0xFF00)>>8;
+    port_test->write(data_to_send);
+}
+
+void MainWindow::on_write_Ki_clicked()
+{
+    QByteArray data_to_send;//
+    data_to_send[0] = 'g'; // Коэффициент
+    QString raw_string_val = ui->Ki_text->toPlainText();
+    qDebug() << raw_string_val;
+    float float_val  = raw_string_val.toFloat();
+    qDebug() << float_val;
+    float test2  = (float_val*10000);
+    qDebug() << test2;
+    int16_t encoded_float_val = (int16_t)test2;
+     qDebug() << encoded_float_val;
+
+    data_to_send[1] = (encoded_float_val & 0xFF); // Значение int16 (float*100)
+    data_to_send[2] = (encoded_float_val & 0xFF00)>>8;
+    port_test->write(data_to_send);
+}
+
+void MainWindow::on_write_Kd_clicked()
+{
+    QByteArray data_to_send;//
+    data_to_send[0] = 'h'; // Коэффициент
+    QString raw_string_val = ui->Kd_text->toPlainText();
+    qDebug() << raw_string_val;
+    uint16_t Kd  = raw_string_val.toUShort();
+    //qDebug() << float_val;
+    //float test2  = (float_val*10000);
+    //qDebug() << test2;
+    //int16_t encoded_float_val = (int16_t)test2;
+    // qDebug() << encoded_float_val;
+
+    data_to_send[1] = (Kd & 0xFF); // Значение int16 (float*100)
+    data_to_send[2] = (Kd & 0xFF00)>>8;
+    port_test->write(data_to_send);
+}

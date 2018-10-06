@@ -54,6 +54,12 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_Set_angle_2_clicked();
+
+    void on_write_Ki_clicked();
+
+    void on_write_Kd_clicked();
+
 private:
 
     Ui::MainWindow *ui;

@@ -181,6 +181,22 @@ USART_2_init();
 					Osc_struct_qt.enable = 1;
 				break;
 				
+				case 'e' : //  Kp
+					float val = (float)((int16_t)receive_buffer[1]|((int16_t)receive_buffer[2])<<8);
+				  Kp = val/100;
+				break;
+				
+				case 'g' : //  Kp
+					float val_ki = (float)((int16_t)receive_buffer[1]|((int16_t)receive_buffer[2])<<8);
+				  Ki = val_ki/10000;
+				break;
+				
+				case 'h' : //  Kp
+					uint16_t val_kd = ((uint16_t)receive_buffer[1]|((uint16_t)receive_buffer[2])<<8);
+				  Kd = (float)val_kd;
+				break;
+					
+				
 								
 			}
 		}

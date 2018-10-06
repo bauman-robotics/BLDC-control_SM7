@@ -22,6 +22,7 @@
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -50,6 +51,21 @@ public:
     QPushButton *pushButton_Set_angle;
     QSlider *horizontalSlider;
     QPushButton *pushButton_2;
+    QWidget *layoutWidget;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label_3;
+    QTextEdit *Kp_text;
+    QPushButton *pushButton_Set_angle_2;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_4;
+    QTextEdit *Ki_text;
+    QPushButton *write_Ki;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *label_5;
+    QTextEdit *Kd_text;
+    QPushButton *write_Kd;
     QWidget *tab_4;
     QGridLayout *gridLayout_4;
     QGridLayout *real_time_plot_layout;
@@ -138,6 +154,75 @@ public:
         pushButton_2 = new QPushButton(tab_2);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(30, 240, 75, 23));
+        layoutWidget = new QWidget(tab_2);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(230, 30, 172, 31));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        label_3 = new QLabel(layoutWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        horizontalLayout->addWidget(label_3);
+
+        Kp_text = new QTextEdit(layoutWidget);
+        Kp_text->setObjectName(QStringLiteral("Kp_text"));
+
+        horizontalLayout->addWidget(Kp_text);
+
+        pushButton_Set_angle_2 = new QPushButton(layoutWidget);
+        pushButton_Set_angle_2->setObjectName(QStringLiteral("pushButton_Set_angle_2"));
+
+        horizontalLayout->addWidget(pushButton_Set_angle_2);
+
+        widget = new QWidget(tab_2);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(230, 60, 171, 31));
+        horizontalLayout_3 = new QHBoxLayout(widget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        label_4 = new QLabel(widget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        horizontalLayout_3->addWidget(label_4);
+
+        Ki_text = new QTextEdit(widget);
+        Ki_text->setObjectName(QStringLiteral("Ki_text"));
+
+        horizontalLayout_3->addWidget(Ki_text);
+
+        write_Ki = new QPushButton(widget);
+        write_Ki->setObjectName(QStringLiteral("write_Ki"));
+
+        horizontalLayout_3->addWidget(write_Ki);
+
+        widget1 = new QWidget(tab_2);
+        widget1->setObjectName(QStringLiteral("widget1"));
+        widget1->setGeometry(QRect(230, 90, 171, 31));
+        horizontalLayout_4 = new QHBoxLayout(widget1);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        label_5 = new QLabel(widget1);
+        label_5->setObjectName(QStringLiteral("label_5"));
+
+        horizontalLayout_4->addWidget(label_5);
+
+        Kd_text = new QTextEdit(widget1);
+        Kd_text->setObjectName(QStringLiteral("Kd_text"));
+
+        horizontalLayout_4->addWidget(Kd_text);
+
+        write_Kd = new QPushButton(widget1);
+        write_Kd->setObjectName(QStringLiteral("write_Kd"));
+
+        horizontalLayout_4->addWidget(write_Kd);
+
         tabWidget->addTab(tab_2, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName(QStringLiteral("tab_4"));
@@ -194,6 +279,12 @@ public:
         label_2->setText(QApplication::translate("MainWindow", "\320\227\320\260\320\264\320\260\320\275\320\270\320\265 \320\277\320\276\320\273\320\276\320\266\320\265\320\275\320\270\321\217", nullptr));
         pushButton_Set_angle->setText(QApplication::translate("MainWindow", "W", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "\320\232\320\260\320\273\320\270\320\261\321\200\320\276\320\262\320\272\320\260", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Kp", nullptr));
+        pushButton_Set_angle_2->setText(QApplication::translate("MainWindow", "W", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Ki", nullptr));
+        write_Ki->setText(QApplication::translate("MainWindow", "W", nullptr));
+        label_5->setText(QApplication::translate("MainWindow", "Kd", nullptr));
+        write_Kd->setText(QApplication::translate("MainWindow", "W", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\320\243\320\277\321\200\320\260\320\262\320\273\320\265\320\275\320\270\320\265", nullptr));
         pushButton->setText(QApplication::translate("MainWindow", "\320\222\320\272\320\273\321\216\321\207\320\270\321\202\321\214", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "\320\223\321\200\320\260\321\204\320\270\320\272 \320\262 \321\200\320\265\320\260\320\273\321\214\320\275\320\276\320\274 \320\262\321\200\320\265\320\274\320\265\320\275\320\270", nullptr));
