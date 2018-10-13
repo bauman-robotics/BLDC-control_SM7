@@ -24,7 +24,6 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,12 +34,6 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QTabWidget *tabWidget;
-    QWidget *tab;
-    QGridLayout *gridLayout_2;
-    QVBoxLayout *Plot_Layout;
-    QHBoxLayout *horizontalLayout_2;
-    QPushButton *Get_oscillogram;
-    QPushButton *motor_on_off_button;
     QWidget *tab_2;
     QRadioButton *radioButton_disabled_mode;
     QRadioButton *radioButton_static_mode;
@@ -56,20 +49,16 @@ public:
     QLabel *label_3;
     QTextEdit *Kp_text;
     QPushButton *pushButton_Set_angle_2;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_4;
     QTextEdit *Ki_text;
     QPushButton *write_Ki;
-    QWidget *widget1;
+    QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_5;
     QTextEdit *Kd_text;
     QPushButton *write_Kd;
-    QWidget *tab_4;
-    QGridLayout *gridLayout_4;
-    QGridLayout *real_time_plot_layout;
-    QPushButton *pushButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -87,35 +76,6 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tab = new QWidget();
-        tab->setObjectName(QStringLiteral("tab"));
-        gridLayout_2 = new QGridLayout(tab);
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setContentsMargins(11, 11, 11, 11);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        Plot_Layout = new QVBoxLayout();
-        Plot_Layout->setSpacing(6);
-        Plot_Layout->setObjectName(QStringLiteral("Plot_Layout"));
-
-        gridLayout_2->addLayout(Plot_Layout, 0, 0, 1, 1);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        Get_oscillogram = new QPushButton(tab);
-        Get_oscillogram->setObjectName(QStringLiteral("Get_oscillogram"));
-
-        horizontalLayout_2->addWidget(Get_oscillogram);
-
-        motor_on_off_button = new QPushButton(tab);
-        motor_on_off_button->setObjectName(QStringLiteral("motor_on_off_button"));
-
-        horizontalLayout_2->addWidget(motor_on_off_button);
-
-
-        gridLayout_2->addLayout(horizontalLayout_2, 1, 0, 1, 1);
-
-        tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
         radioButton_disabled_mode = new QRadioButton(tab_2);
@@ -156,7 +116,7 @@ public:
         pushButton_2->setGeometry(QRect(30, 240, 75, 23));
         layoutWidget = new QWidget(tab_2);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(230, 30, 172, 31));
+        layoutWidget->setGeometry(QRect(310, 40, 172, 73));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -177,72 +137,53 @@ public:
 
         horizontalLayout->addWidget(pushButton_Set_angle_2);
 
-        widget = new QWidget(tab_2);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(230, 60, 171, 31));
-        horizontalLayout_3 = new QHBoxLayout(widget);
+        layoutWidget1 = new QWidget(tab_2);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(310, 130, 171, 73));
+        horizontalLayout_3 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        label_4 = new QLabel(widget);
+        label_4 = new QLabel(layoutWidget1);
         label_4->setObjectName(QStringLiteral("label_4"));
 
         horizontalLayout_3->addWidget(label_4);
 
-        Ki_text = new QTextEdit(widget);
+        Ki_text = new QTextEdit(layoutWidget1);
         Ki_text->setObjectName(QStringLiteral("Ki_text"));
 
         horizontalLayout_3->addWidget(Ki_text);
 
-        write_Ki = new QPushButton(widget);
+        write_Ki = new QPushButton(layoutWidget1);
         write_Ki->setObjectName(QStringLiteral("write_Ki"));
 
         horizontalLayout_3->addWidget(write_Ki);
 
-        widget1 = new QWidget(tab_2);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        widget1->setGeometry(QRect(230, 90, 171, 31));
-        horizontalLayout_4 = new QHBoxLayout(widget1);
+        layoutWidget2 = new QWidget(tab_2);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(310, 220, 172, 73));
+        horizontalLayout_4 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        label_5 = new QLabel(widget1);
+        label_5 = new QLabel(layoutWidget2);
         label_5->setObjectName(QStringLiteral("label_5"));
 
         horizontalLayout_4->addWidget(label_5);
 
-        Kd_text = new QTextEdit(widget1);
+        Kd_text = new QTextEdit(layoutWidget2);
         Kd_text->setObjectName(QStringLiteral("Kd_text"));
 
         horizontalLayout_4->addWidget(Kd_text);
 
-        write_Kd = new QPushButton(widget1);
+        write_Kd = new QPushButton(layoutWidget2);
         write_Kd->setObjectName(QStringLiteral("write_Kd"));
 
         horizontalLayout_4->addWidget(write_Kd);
 
         tabWidget->addTab(tab_2, QString());
-        tab_4 = new QWidget();
-        tab_4->setObjectName(QStringLiteral("tab_4"));
-        tab_4->setEnabled(true);
-        gridLayout_4 = new QGridLayout(tab_4);
-        gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(11, 11, 11, 11);
-        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        real_time_plot_layout = new QGridLayout();
-        real_time_plot_layout->setSpacing(6);
-        real_time_plot_layout->setObjectName(QStringLiteral("real_time_plot_layout"));
-
-        gridLayout_4->addLayout(real_time_plot_layout, 0, 0, 1, 1);
-
-        pushButton = new QPushButton(tab_4);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-
-        gridLayout_4->addWidget(pushButton, 1, 0, 1, 1);
-
-        tabWidget->addTab(tab_4, QString());
 
         gridLayout->addWidget(tabWidget, 0, 0, 1, 1);
 
@@ -260,7 +201,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -269,9 +210,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        Get_oscillogram->setText(QApplication::translate("MainWindow", "\320\241\320\275\321\217\321\202\321\214 \320\276\321\206\320\270\320\273\320\273\320\276\320\263\321\200\320\260\320\274\320\274\321\203", nullptr));
-        motor_on_off_button->setText(QApplication::translate("MainWindow", "\320\222\320\272\320\273/\320\262\321\213\320\272\320\273 \320\274\320\276\321\202\320\276\321\200", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "\320\236\321\201\321\206\320\270\320\273\320\273\320\276\320\263\321\200\320\260\320\274\320\260 ", nullptr));
         radioButton_disabled_mode->setText(QApplication::translate("MainWindow", "\320\222\321\213\320\272\320\273\321\216\321\207\320\265\320\275", nullptr));
         radioButton_static_mode->setText(QApplication::translate("MainWindow", "\320\227\320\260\320\264\320\260\320\275\320\270\320\265 \320\277\320\276\320\273\320\276\320\266\320\265\320\275\320\270\321\217", nullptr));
         radioButton_sine_mode->setText(QApplication::translate("MainWindow", "\320\241\320\270\320\275\321\203\321\201\320\276\320\270\320\264\320\260", nullptr));
@@ -286,8 +224,6 @@ public:
         label_5->setText(QApplication::translate("MainWindow", "Kd", nullptr));
         write_Kd->setText(QApplication::translate("MainWindow", "W", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\320\243\320\277\321\200\320\260\320\262\320\273\320\265\320\275\320\270\320\265", nullptr));
-        pushButton->setText(QApplication::translate("MainWindow", "\320\222\320\272\320\273\321\216\321\207\320\270\321\202\321\214", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "\320\223\321\200\320\260\321\204\320\270\320\272 \320\262 \321\200\320\265\320\260\320\273\321\214\320\275\320\276\320\274 \320\262\321\200\320\265\320\274\320\265\320\275\320\270", nullptr));
     } // retranslateUi
 
 };
