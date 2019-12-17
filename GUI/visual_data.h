@@ -18,13 +18,7 @@ public:
 QChart* chart1;
 QChartView *chartView;
 QLineSeries *series;
-QLineSeries *series2;
-QLineSeries *series3;
-QLineSeries* series4;
-QLineSeries* series5;
-QLineSeries* series6;
-QLineSeries* series7;
-QLineSeries* series8;
+
 QLineSeries* series_accel_angle_mpu6000;
 QLineSeries* series_accel_angle_da2;
 
@@ -33,17 +27,10 @@ QLineSeries* series_current;
 QLineSeries* series_des_current;
 
 
-
-
 MyChart();
     ~MyChart();
 
  //   void change();
-
-
-
-
-
 };
 
 
@@ -54,13 +41,6 @@ class RealTimePlot: public QObject
 public:
     bool state_of_plot;
     QLineSeries* RTseries;
-    QLineSeries* RTseries2;
-    QLineSeries* RTseries3;
-    QLineSeries* RTseries4;
-    QLineSeries* RTseries5;
-    QLineSeries* RTseries6;
-    QLineSeries* RTseries7;
-    QLineSeries* RTseries8;
 
     QChart* RTchart;
     QChartView *RTchartView;
