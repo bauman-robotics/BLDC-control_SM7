@@ -65,6 +65,15 @@ MainWindow::MainWindow(QWidget *parent) :
     set_default_values();
 }
 
+void MainWindow::update_speed_pos_visualisation(double pos)
+{
+    current_pos = pos;
+    speed = (current_pos - prev_pos)*(200/6.28);         // дельта угол * (1/6.28)радианы * 200 (частота обновления 200 Герц)
+    ui->pos_output->display(pos*100/100);
+    ui->speed_output->display(speed*100/100);
+    prev_pos = pos;
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -91,7 +100,7 @@ uint8_t a, c;
 void MainWindow::serialDataReceived()
 {
     data_buffer = port_test->readAll();
-     data_size = data_buffer.size();
+    data_size = data_buffer.size();
    //  replace = ];
      //qDebug() << data_buffer.size();
      uint8_t tmp_mass[254];
@@ -204,7 +213,10 @@ void MainWindow::serialDataReceived()
         //series_vec.push_back(d_data_buf);
    }
   else
+  {
       plot_count = 0;
+      update_speed_pos_visualisation(d_data_buf); // обновление информации на первой вкладке, label Скорость и Положение
+  }
 
   if (save_to_file_enabled)
   {
@@ -567,14 +579,22 @@ void MainWindow::on_savePlotToFile_clicked()
     {
         // QDataStream out(&file);
         file.write("x;y;\n");
+        double curr_pos = 0;
+        double prev_pos = 0;
+        double speed = 0;
         for(int i=0; i < series_vec.count(); ++i) {
             // out << QString::number( series_vec[i] ).toLocal8Bit() << ";";
             QByteArray ba;
             ba = QString::number( i ).toLatin1();
             ba += ";";
-            ba += QString::number( series_vec[i] ).toLatin1();
-            ba += ";\n";
+            ba += QString::number( (float)series_vec[i] ).toLatin1();
+            ba += ";";
             file.write(ba);
+            curr_pos = (float)series_vec[i];
+            speed = (curr_pos - prev_pos)*(200/6.28);
+            prev_pos = curr_pos;
+            ba += QString::number( speed ).toLatin1();
+            ba += ";\n";
         }
         // out << series_vec;
         file.close();

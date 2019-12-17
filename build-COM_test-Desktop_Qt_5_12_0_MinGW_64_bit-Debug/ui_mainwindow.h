@@ -16,7 +16,6 @@
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -45,8 +44,6 @@ public:
     QGridLayout *gridLayout_6;
     QGridLayout *gridLayout_5;
     QGridLayout *gridLayout_3;
-    QSpacerItem *horizontalSpacer_2;
-    QPushButton *pushButton_2;
     QToolBox *toolBox;
     QWidget *page;
     QGridLayout *gridLayout_49;
@@ -56,6 +53,8 @@ public:
     QGridLayout *gridLayout_50;
     QLineEdit *udpIpEdit;
     QPushButton *udpConnectButton;
+    QPushButton *pushButton_2;
+    QSpacerItem *horizontalSpacer_2;
     QGridLayout *gridLayout_2;
     QSlider *horizontalSlider;
     QHBoxLayout *horizontalLayout_4;
@@ -80,9 +79,7 @@ public:
     QRadioButton *radioButton_path_mode;
     QRadioButton *radioButton_sine_mode;
     QGridLayout *gridLayout_4;
-    QLabel *label_6;
     QSpacerItem *horizontalSpacer_3;
-    QSpacerItem *verticalSpacer_2;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *label_3;
@@ -97,10 +94,8 @@ public:
     QTextEdit *Kd_text;
     QPushButton *write_Kd;
     QSpacerItem *verticalSpacer;
-    QLabel *label_pos;
-    QLabel *label_speed;
-    QLCDNumber *speed_output;
-    QLCDNumber *pos_output;
+    QLabel *label_6;
+    QSpacerItem *verticalSpacer_2;
     QWidget *tab_graph;
     QWidget *layoutWidget;
     QGridLayout *gridLayout;
@@ -137,16 +132,6 @@ public:
         gridLayout_3 = new QGridLayout();
         gridLayout_3->setSpacing(6);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_3->addItem(horizontalSpacer_2, 0, 1, 1, 1);
-
-        pushButton_2 = new QPushButton(tab_2);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setEnabled(false);
-
-        gridLayout_3->addWidget(pushButton_2, 1, 0, 1, 1);
-
         toolBox = new QToolBox(tab_2);
         toolBox->setObjectName(QString::fromUtf8("toolBox"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -174,7 +159,7 @@ public:
         toolBox->addItem(page, QString::fromUtf8("Serial Connection"));
         page_2 = new QWidget();
         page_2->setObjectName(QString::fromUtf8("page_2"));
-        page_2->setGeometry(QRect(0, 0, 169, 85));
+        page_2->setGeometry(QRect(0, 0, 115, 79));
         gridLayout_50 = new QGridLayout(page_2);
         gridLayout_50->setSpacing(6);
         gridLayout_50->setContentsMargins(11, 11, 11, 11);
@@ -194,6 +179,16 @@ public:
         toolBox->addItem(page_2, QString::fromUtf8("UDP Connection"));
 
         gridLayout_3->addWidget(toolBox, 0, 0, 1, 1);
+
+        pushButton_2 = new QPushButton(tab_2);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setEnabled(false);
+
+        gridLayout_3->addWidget(pushButton_2, 1, 0, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer_2, 0, 1, 1, 1);
 
 
         gridLayout_5->addLayout(gridLayout_3, 0, 0, 1, 1);
@@ -338,19 +333,9 @@ public:
         gridLayout_4 = new QGridLayout();
         gridLayout_4->setSpacing(6);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
-        label_6 = new QLabel(tab_2);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setFont(font1);
-
-        gridLayout_4->addWidget(label_6, 3, 0, 1, 1);
-
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_4->addItem(horizontalSpacer_3, 3, 1, 1, 1);
-
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout_4->addItem(verticalSpacer_2, 2, 0, 1, 1);
+        gridLayout_4->addItem(horizontalSpacer_3, 1, 1, 1, 1);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
@@ -435,131 +420,17 @@ public:
         verticalLayout->addItem(verticalSpacer);
 
 
-        gridLayout_4->addLayout(verticalLayout, 4, 0, 1, 1);
+        gridLayout_4->addLayout(verticalLayout, 2, 0, 1, 1);
 
-        label_pos = new QLabel(tab_2);
-        label_pos->setObjectName(QString::fromUtf8("label_pos"));
+        label_6 = new QLabel(tab_2);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setFont(font1);
 
-        gridLayout_4->addWidget(label_pos, 1, 0, 1, 1);
+        gridLayout_4->addWidget(label_6, 1, 0, 1, 1);
 
-        label_speed = new QLabel(tab_2);
-        label_speed->setObjectName(QString::fromUtf8("label_speed"));
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_4->addWidget(label_speed, 0, 0, 1, 1);
-
-        speed_output = new QLCDNumber(tab_2);
-        speed_output->setObjectName(QString::fromUtf8("speed_output"));
-        QPalette palette;
-        QBrush brush(QColor(255, 255, 255, 255));
-        brush.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
-        QBrush brush1(QColor(0, 0, 0, 255));
-        brush1.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Button, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Light, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Midlight, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Dark, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Mid, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Text, brush);
-        palette.setBrush(QPalette::Active, QPalette::BrightText, brush);
-        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
-        palette.setBrush(QPalette::Active, QPalette::Base, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Window, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Shadow, brush1);
-        palette.setBrush(QPalette::Active, QPalette::AlternateBase, brush1);
-        QBrush brush2(QColor(255, 255, 220, 255));
-        brush2.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::ToolTipBase, brush2);
-        palette.setBrush(QPalette::Active, QPalette::ToolTipText, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Button, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Light, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Midlight, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Dark, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Mid, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Text, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::BrightText, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Base, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Window, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Shadow, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::AlternateBase, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush2);
-        palette.setBrush(QPalette::Inactive, QPalette::ToolTipText, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Button, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Light, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Midlight, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Dark, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Mid, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Text, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::BrightText, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Shadow, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush2);
-        palette.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush1);
-        speed_output->setPalette(palette);
-        speed_output->setSmallDecimalPoint(true);
-        speed_output->setDigitCount(3);
-
-        gridLayout_4->addWidget(speed_output, 0, 1, 1, 1);
-
-        pos_output = new QLCDNumber(tab_2);
-        pos_output->setObjectName(QString::fromUtf8("pos_output"));
-        QPalette palette1;
-        palette1.setBrush(QPalette::Active, QPalette::WindowText, brush);
-        palette1.setBrush(QPalette::Active, QPalette::Button, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Light, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Midlight, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Dark, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Mid, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Text, brush);
-        palette1.setBrush(QPalette::Active, QPalette::BrightText, brush);
-        palette1.setBrush(QPalette::Active, QPalette::ButtonText, brush);
-        palette1.setBrush(QPalette::Active, QPalette::Base, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Window, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::Shadow, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::AlternateBase, brush1);
-        palette1.setBrush(QPalette::Active, QPalette::ToolTipBase, brush2);
-        palette1.setBrush(QPalette::Active, QPalette::ToolTipText, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
-        palette1.setBrush(QPalette::Inactive, QPalette::Button, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Light, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Midlight, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Dark, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Mid, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Text, brush);
-        palette1.setBrush(QPalette::Inactive, QPalette::BrightText, brush);
-        palette1.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
-        palette1.setBrush(QPalette::Inactive, QPalette::Base, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Window, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Shadow, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::AlternateBase, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush2);
-        palette1.setBrush(QPalette::Inactive, QPalette::ToolTipText, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::WindowText, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Button, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Light, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Midlight, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Dark, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Mid, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Text, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::BrightText, brush);
-        palette1.setBrush(QPalette::Disabled, QPalette::ButtonText, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Base, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Window, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Shadow, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush2);
-        palette1.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush1);
-        pos_output->setPalette(palette1);
-        pos_output->setSmallDecimalPoint(true);
-        pos_output->setDigitCount(3);
-
-        gridLayout_4->addWidget(pos_output, 1, 1, 1, 1);
+        gridLayout_4->addItem(verticalSpacer_2, 0, 0, 1, 1);
 
 
         gridLayout_5->addLayout(gridLayout_4, 0, 1, 2, 1);
@@ -635,11 +506,11 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton_2->setText(QApplication::translate("MainWindow", "\320\232\320\260\320\273\320\270\320\261\321\200\320\276\320\262\320\272\320\260", nullptr));
         ConnectBtn->setText(QApplication::translate("MainWindow", "Connect", nullptr));
         toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Serial Connection", nullptr));
         udpConnectButton->setText(QApplication::translate("MainWindow", "Connect", nullptr));
         toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("MainWindow", "UDP Connection", nullptr));
+        pushButton_2->setText(QApplication::translate("MainWindow", "\320\232\320\260\320\273\320\270\320\261\321\200\320\276\320\262\320\272\320\260", nullptr));
         pushButton_Set_angle->setText(QApplication::translate("MainWindow", "Send", nullptr));
         button_sin_025->setText(QApplication::translate("MainWindow", "0.25 \320\223\321\206", nullptr));
         button_sin_05->setText(QApplication::translate("MainWindow", "0.5 \320\223\321\206", nullptr));
@@ -653,7 +524,6 @@ public:
         radioButton_speed_mode->setText(QApplication::translate("MainWindow", "\320\227\320\260\320\264\320\260\320\275\320\270\320\265 \321\201\320\272\320\276\321\200\320\276\321\201\321\202\320\270", nullptr));
         radioButton_path_mode->setText(QApplication::translate("MainWindow", "\320\227\320\260\320\264\320\260\320\275\320\270\320\265 \320\277\321\203\321\202\320\270", nullptr));
         radioButton_sine_mode->setText(QApplication::translate("MainWindow", "\320\241\320\270\320\275\321\203\321\201\320\276\320\270\320\264\320\260", nullptr));
-        label_6->setText(QApplication::translate("MainWindow", "\320\237\320\230\320\224 \321\200\320\265\320\263\321\203\320\273\321\217\321\202\320\276\321\200 \320\277\320\276\320\273\320\276\320\266\320\265\320\275\320\270\321\217", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Kp", nullptr));
         Kp_text->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -675,8 +545,7 @@ public:
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">50</p></body></html>", nullptr));
         write_Kd->setText(QApplication::translate("MainWindow", "W", nullptr));
-        label_pos->setText(QApplication::translate("MainWindow", "\320\242\320\265\320\272\321\203\321\211\320\265\320\265 \320\277\320\276\320\273\320\276\320\266\320\265\320\275\320\270\320\265:", nullptr));
-        label_speed->setText(QApplication::translate("MainWindow", "\320\242\320\265\320\272\321\203\321\211\320\260\321\217 \321\201\320\272\320\276\321\200\320\276\321\201\321\202\321\214:", nullptr));
+        label_6->setText(QApplication::translate("MainWindow", "\320\237\320\230\320\224 \321\200\320\265\320\263\321\203\320\273\321\217\321\202\320\276\321\200 \320\277\320\276\320\273\320\276\320\266\320\265\320\275\320\270\321\217", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\320\243\320\277\321\200\320\260\320\262\320\273\320\265\320\275\320\270\320\265", nullptr));
         plot_graphic->setText(QApplication::translate("MainWindow", "\320\237\320\276\321\201\321\202\321\200\320\276\320\265\320\275\320\270\320\265 \320\263\321\200\320\260\321\204\320\270\320\272\320\260", nullptr));
         pushButtonResetPlot->setText(QApplication::translate("MainWindow", "\320\236\321\207\320\270\321\201\321\202\320\270\321\202\321\214 \320\263\321\200\320\260\321\204\320\270\320\272", nullptr));

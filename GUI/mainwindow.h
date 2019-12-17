@@ -53,6 +53,7 @@ private slots:
     void serialDataReceived();
     void on_pushButtonResetPlot_clicked();
     void on_savePlotToFile_clicked();
+    void update_speed_pos_visualisation(double d_data_buf);
 
     void on_pushButtonStartSaveToFile_clicked();
 
@@ -86,6 +87,10 @@ private:
     QVector<uint16_t> current_des_v;
     bool oscillogramm_EN;
     QVector<float> series_vec;
+
+    double current_pos = 0;
+    double prev_pos = 0;
+    double speed = 0;
 };
 
 #endif // MAINWINDOW_H
