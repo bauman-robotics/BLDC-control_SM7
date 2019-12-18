@@ -503,7 +503,7 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush1);
         speed_output->setPalette(palette);
         speed_output->setSmallDecimalPoint(true);
-        speed_output->setDigitCount(3);
+        speed_output->setDigitCount(8);
 
         gridLayout_4->addWidget(speed_output, 0, 1, 1, 1);
 
@@ -557,7 +557,7 @@ public:
         palette1.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush1);
         pos_output->setPalette(palette1);
         pos_output->setSmallDecimalPoint(true);
-        pos_output->setDigitCount(3);
+        pos_output->setDigitCount(8);
 
         gridLayout_4->addWidget(pos_output, 1, 1, 1, 1);
 

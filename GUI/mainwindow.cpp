@@ -67,10 +67,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::update_speed_pos_visualisation(double pos)
 {
+    double delta = 0;
     current_pos = pos;
-    speed = (current_pos - prev_pos)*(200/6.28);         // дельта угол * (1/6.28)радианы * 200 (частота обновления 200 Герц)
-    ui->pos_output->display(pos*100/100);
-    ui->speed_output->display(speed*100/100);
+    if (current_pos < 0 && prev_pos > 0)
+        delta = current_pos + 360 - prev_pos;
+    else
+        delta = current_pos - prev_pos;
+    acc -= acc / acc_size;
+    acc += delta;
+    if (iteration_num < acc_size)
+    {
+        speed = (delta)*(4/6.28);         // дельта угол * (1/6.28)радианы * 200 (частота обновления 200 Герц)
+        iteration_num++;
+    }
+    else
+    {
+        speed = (acc / acc_size) * (4/6.28);
+    }
+
+    ui->pos_output->display(floor(pos*10)/10);
+    ui->speed_output->display(floor(speed*10000)/10000);
     prev_pos = pos;
 }
 
@@ -579,9 +595,9 @@ void MainWindow::on_savePlotToFile_clicked()
     {
         // QDataStream out(&file);
         file.write("x;y;\n");
-        double curr_pos = 0;
-        double prev_pos = 0;
-        double speed = 0;
+        float curr_pos = 0;
+        float prev_pos = 0;
+        float speed = 0;
         for(int i=0; i < series_vec.count(); ++i) {
             // out << QString::number( series_vec[i] ).toLocal8Bit() << ";";
             QByteArray ba;
@@ -590,7 +606,7 @@ void MainWindow::on_savePlotToFile_clicked()
             ba += QString::number( (float)series_vec[i] ).toLatin1();
             ba += ";";
             file.write(ba);
-            curr_pos = (float)series_vec[i];
+            curr_pos = series_vec[i];
             speed = (curr_pos - prev_pos)*(200/6.28);
             prev_pos = curr_pos;
             ba += QString::number( speed ).toLatin1();

@@ -91,6 +91,11 @@ private:
     double current_pos = 0;
     double prev_pos = 0;
     double speed = 0;
+
+    // фильтр для скорости
+    float acc = 0;  // аккумулятор
+    uint64_t acc_size = 500; // размер аккумулятора
+    uint64_t iteration_num = 0;
 };
 
 #endif // MAINWINDOW_H
